@@ -39,7 +39,6 @@ def token_verification(f):
 
 
 @app.route('/', methods=['GET'])
-@token_verification
 def index():
     return jsonify({"Message":"Welcome to the Place's search API!"})
 

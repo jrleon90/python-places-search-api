@@ -7,17 +7,19 @@ def getFoursquareData(data):
     foursquareDataJson = foursquareData.json()
     responseData = []
     for item in foursquareDataJson['response']['venues']:
-        outputData = {}   
+        outputData = {}
+        outputData['data'] = {}   
         placeDetail = requests.get('https://api.foursquare.com/v2/venues/'+item['id']+'?client_id='+app.config['FOURSQUARE_CLIENT_ID']+'&client_secret='+app.config['FOURSQUARE_CLIENT_SECRET']+'&v='+app.config['FOURSQUARE_VERSION'])
         placeDetailJson = placeDetail.json()
+
+        outputData['data']['foursquare_latitude'] = item['location']['lat']
+        outputData['data']['foursquare_longitude'] = item['location']['lng']
+        if 'address' in item['location']:
+            outputData['data']['foursquare_address'] = item['location']['address']
+        if 'url' in placeDetailJson['response']['venue']:
+            outputData['data']['foursquare_website'] = placeDetailJson['response']['venue']['url']
         outputData['foursquare_id'] = item['id']
         outputData['foursquare_name'] = item['name']
-        outputData['foursquare_latitude'] = item['location']['lat']
-        outputData['foursquare_longitude'] = item['location']['lng']
-        if 'address' in item['location']:
-            outputData['foursquare_address'] = item['location']['address']
-        if 'url' in placeDetailJson['response']['venue']:
-            outputData['foursquare_website'] = placeDetailJson['response']['venue']['url']
         responseData.append(outputData)
 
         

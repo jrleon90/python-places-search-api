@@ -7,5 +7,5 @@ def getData (data):
     googleData = googlePlaceApi.getGoogleData(data)
     foursqueareData = foursqueareApi.getFoursquareData(data)
 
-    return jsonify({'google_place': googleData,'foursquare_data': foursqueareData})
+    return jsonify({'foursquare_data': foursqueareData,'google_place': googleData})
 
